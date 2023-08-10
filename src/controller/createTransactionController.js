@@ -4,7 +4,7 @@ function createTransaction(request, response) {
   const body = request.body;
 
   if (!body.id || !body.title || !body.type || !body.amount) {
-    return response.status(400).json({ error: 'missing field id, title, type or amountteste' });
+    return response.status(400).json({ error: 'missing field id, title, type or amount teste' });
   }
 
   const result = createTransactionUseCase.execute(body);
