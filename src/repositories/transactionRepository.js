@@ -1,12 +1,17 @@
-const { startConnection: startConnection, closeConection } = require('../infra/db/mongodb');
+const { startConnection, closeConnection } = require('../infra/db/mongodb');
 const transactionModel = require('../models/transaction');
 
 class TransactionRepository {
-  async create(params) {}
+  async create(params) {
+    await startConnection();
+    await transactionModel.create(params);
+    await closeConnection();
+  }
+
   async findAll() {
-    startConnection();
+    await startConnection();
     const transactions = await transactionModel.find();
-    await closeConection();
+    await closeConnection();
     return transactions;
   }
 }
