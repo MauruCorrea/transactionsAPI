@@ -4,7 +4,7 @@ const transactioModel = new Schema(
   {
     title: String,
     type: String,
-    category: String || '',
+    category: { type: String, default: null },
     amount: Number,
   },
   { timestamps: true }
