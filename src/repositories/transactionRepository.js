@@ -3,30 +3,48 @@ const transactionModel = require('../models/transaction');
 
 class TransactionRepository {
   async create(params) {
-    await startConnection();
-    await transactionModel.create(params);
-    await closeConnection();
+    try {
+      await startConnection();
+      await transactionModel.create(params);
+      await closeConnection();
+    } catch (error) {
+      console.log(error);
+      throw new Error('Erro ao criar transação');
+    }
   }
 
   async findAll() {
-    await startConnection();
-    const transactions = await transactionModel.find();
-    await closeConnection();
-    return transactions;
+    try {
+      await startConnection();
+      const transactions = await transactionModel.find();
+      await closeConnection();
+      return transactions;
+    } catch (error) {
+      console.log(error);
+      throw new Error('Erro ao listar transações');
+    }
+  }
+
+  async update(_id, data) {
+    try {
+      await startConnection();
+      await transactionModel.updateOne({ _id }, data);
+      await closeConnection();
+    } catch (error) {
+      console.log(error);
+      throw new Error('Erro ao atualizar transação');
+    }
+  }
+
+  async delete(_id) {
+    try {
+      await startConnection();
+      await transactionModel.deleteOne({ _id });
+      await closeConnection();
+    } catch (error) {
+      throw new Error('Erro ao deletar transação');
+    }
   }
 }
 
 module.exports = TransactionRepository;
-// const transactions = require('../infra/db/data');
-
-// function create(transaction) {
-//   transactions.push(transaction);
-// }
-// function findById(id) {
-//   return transactions.find((t) => t.id === id);
-// }
-
-// function findAll() {
-//   return transactions;
-// }
-// module.exports = { create, findAll, findById };

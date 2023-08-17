@@ -2,7 +2,13 @@ const Repository = require('../repositories/transactionRepository');
 
 async function execute() {
   const repository = new Repository();
-  return await repository.findAll();
+  try {
+    return await repository.findAll();
+  } catch (error) {
+    return {
+      errorMessage: error.message,
+    };
+  }
 }
 
 module.exports = { execute };
